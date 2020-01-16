@@ -17,13 +17,8 @@ public class Quotes {
         this.text = text;
     }
 
-    public void randomQuote()
-    {
-
-    }
-
     public String toString()
     {
-        return String.format(this.text + "\n" + this.author + "\n");
+        return String.format("Quote: " + this.text + "\n" + "Author: " + this.author + "\n");
     }
 }

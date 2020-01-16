@@ -18,7 +18,7 @@ public class App
 
         Quotes[] quotes = readQuotes();
         randomQuoteFromJSon(quotes);
-        System.out.println(randomQuoteFromJSon(quotes));
+        System.out.println(randomQuoteFromJSon(quotes).toString());
         }
 
 
