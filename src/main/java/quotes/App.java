@@ -5,22 +5,36 @@ package quotes;
 
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.BufferOverflowException;
 import java.util.Scanner;
 
 public class App
 {
-    public String getGreeting()
+
+    public static void main(String[] args) throws FileNotFoundException {
+
+
+        Quotes[] quotes = readQuotes();
+        randomQuoteFromJSon(quotes);
+        System.out.println(randomQuoteFromJSon(quotes));
+        }
+
+
+    public static Quotes[] readQuotes() throws FileNotFoundException
     {
-        return "Hello world.";
+        Gson gson = new Gson();
+        String path = "src/main/resources/recentquotes.json";
+            FileReader reader = new FileReader(path);
+            Quotes[] quoteArray = gson.fromJson(reader, Quotes[].class);
+            return quoteArray;
     }
 
-    public static void main(String[] args)
+    public static Quotes randomQuoteFromJSon(Quotes[] quotes)
     {
-        System.out.println(new App().getGreeting());
+        int randomQuote = (int)(Math.random() * quotes.length);
+        return  quotes[randomQuote];
     }
+
 }
