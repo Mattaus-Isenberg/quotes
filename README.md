@@ -1,6 +1,10 @@
 # Quotes
 # Lab 8 
 
+## Lab Partners
+-**Daesy Stephens**
+-**Mattäus Isenberg**
+
 **How Grader can run this code:** the code can be run from --> ```public static void main```, from there we are calling ```randomQuoteFromJSon(quotes)```
 
 ## Lab Description
