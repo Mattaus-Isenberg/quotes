@@ -16,7 +16,7 @@ public class App
     public static void main(String[] args) throws FileNotFoundException {
         Quotes[] quotes = readQuotes();
         randomQuoteFromJSon(quotes);
-        System.out.println(randomQuoteFromJSon(quotes));
+        System.out.println(randomQuoteFromJSon(quotes).toString());
         }
 
 
