@@ -15,4 +15,11 @@ public class AppTest {
         randomQuoteFromJSon(quotes);
         assertNotEquals("Should Contain a Quote", "", randomQuoteFromJSon(quotes));
     }
+
+    @Test public void testNotEmptyRandomQuoteFromStarryQuotes() throws FileNotFoundException {
+        Quotes[] quotes = readQuotes();
+        randomQuoteFromJSon(quotes);
+        assertNotEquals("Should Contain a Quote", "", randomQuoteFromJSon(quotes));
+    }
+
 }
