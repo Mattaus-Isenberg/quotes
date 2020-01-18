@@ -5,28 +5,32 @@ package quotes;
 import com.google.gson.Gson;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class App
 {
-    public static void main(String[] args) throws FileNotFoundException
+    public static void main(String[] args) throws FileNotFoundException, MalformedURLException
     {
-        Quotes[] quotes = readQuotes();
-        randomQuoteFromJSon(quotes);
-        System.out.println(randomQuoteFromJSon(quotes).toString());
-        goGetItOnline();
+            String apiEndPoint = "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote";
+            String backup_Local = "src/main/resources/recentquotes.json";
+            goGetItOnline(apiEndPoint, backup_Local);
     }
 
-    public static void goGetItOnline() throws FileNotFoundException
+    public static BufferedReader dialUP(URL url) throws IOException
     {
-        URL url = null;
+        HttpURLConnection the_Connection = (HttpURLConnection) url.openConnection();
+        the_Connection.setRequestMethod("GET");
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(the_Connection.getInputStream()));
+        return reader;
+    }
+
+    public static void goGetItOnline(String urlString, String backup_Local) throws FileNotFoundException, MalformedURLException {
+        URL url = new URL(urlString);
         try
         {
-            url = new URL("http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote");
-            HttpURLConnection the_Connection = (HttpURLConnection) url.openConnection();
-            the_Connection.setRequestMethod("GET");
-
-            BufferedReader buf_Reader = new BufferedReader(new InputStreamReader(the_Connection.getInputStream()));
+            BufferedReader buf_Reader = dialUP(url);
 
             Gson gson = new Gson();
             StarWars star_Quote = gson.fromJson(buf_Reader, StarWars.class);
@@ -36,17 +40,17 @@ public class App
             buf_Reader.close();
             System.out.println(star_Quote);
         }
-        catch (IOException exception)
+        catch (IOException e)
         {
-            exception.printStackTrace();
-            Quotes[] quotes = readQuotes();
+            e.printStackTrace();
+            Quotes[] quotes = readQuotes(backup_Local);
             System.out.println(randomQuoteFromJSon(quotes));
         }
     }
 
     public static void jsonWriter(StarWars quote)
     {
-        BufferedWriter b_Writer = null;
+        BufferedWriter b_Writer;
         try
         {
             Gson gson = new Gson();
@@ -57,19 +61,18 @@ public class App
             b_Writer.append(build_New_Json);
             b_Writer.close();
         }
-        catch (IOException exception)
+        catch (IOException e)
         {
-            exception.printStackTrace();
+            e.printStackTrace();
         }
     }
 
-    public static Quotes[] readQuotes() throws FileNotFoundException
+    public static Quotes[] readQuotes(String path) throws FileNotFoundException
     {
         Gson gson = new Gson();
-        String path = "src/main/resources/recentquotes.json";
-            FileReader reader = new FileReader(path);
-            Quotes[] quoteArray = gson.fromJson(reader, Quotes[].class);
-            return quoteArray;
+        FileReader reader = new FileReader(path);
+        Quotes[] quoteArray = gson.fromJson(reader, Quotes[].class);
+        return quoteArray;
     }
 
     public static Quotes randomQuoteFromJSon(Quotes[] quotes)

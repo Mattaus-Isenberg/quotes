@@ -10,14 +10,18 @@ import static quotes.App.readQuotes;
 
 public class AppTest {
 
-    @Test public void testNotEmptyRandomQuoteFromJSon() throws FileNotFoundException {
-        Quotes[] quotes = readQuotes();
+    @Test public void testNotEmptyRandomQuoteFromJSon() throws FileNotFoundException
+    {
+        String local_Backup = "src/main/resources/recentquotes.json";
+        Quotes[] quotes = readQuotes(local_Backup);
         randomQuoteFromJSon(quotes);
         assertNotEquals("Should Contain a Quote", "", randomQuoteFromJSon(quotes));
     }
 
-    @Test public void testNotEmptyRandomQuoteFromStarryQuotes() throws FileNotFoundException {
-        Quotes[] quotes = readQuotes();
+    @Test public void testNotEmptyRandomQuoteFromStarryQuotes() throws FileNotFoundException
+    {
+        String local_Backup = "src/main/resources/recentquotes.json";
+        Quotes[] quotes = readQuotes(local_Backup);
         randomQuoteFromJSon(quotes);
         assertNotEquals("Should Contain a Quote", "", randomQuoteFromJSon(quotes));
     }
