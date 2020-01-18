@@ -26,7 +26,7 @@ public class App
         return reader;
     }
 
-    public static void goGetItOnline(String urlString, String backup_Local) throws FileNotFoundException, MalformedURLException {
+    public static String goGetItOnline(String urlString, String backup_Local) throws FileNotFoundException, MalformedURLException {
         URL url = new URL(urlString);
         try
         {
@@ -39,12 +39,17 @@ public class App
 
             buf_Reader.close();
             System.out.println(star_Quote);
+
+            //Returning to be able to test functionality.
+            return star_Quote.toString();
         }
         catch (IOException e)
         {
             e.printStackTrace();
-            Quotes[] quotes = readQuotes(backup_Local);
+            Quotes[] quotes = readLocalQuotes(backup_Local);
             System.out.println(randomQuoteFromJSon(quotes));
+            // Return empty to fail test if no online connectivity
+            return "";
         }
     }
 
@@ -67,10 +72,10 @@ public class App
         }
     }
 
-    public static Quotes[] readQuotes(String path) throws FileNotFoundException
+    public static Quotes[] readLocalQuotes(String local_Backup) throws FileNotFoundException
     {
         Gson gson = new Gson();
-        FileReader reader = new FileReader(path);
+        FileReader reader = new FileReader(local_Backup);
         Quotes[] quoteArray = gson.fromJson(reader, Quotes[].class);
         return quoteArray;
     }

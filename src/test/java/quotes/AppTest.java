@@ -4,26 +4,25 @@
 package quotes;
 import org.junit.Test;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+
 import static org.junit.Assert.*;
-import static quotes.App.randomQuoteFromJSon;
-import static quotes.App.readQuotes;
+import static quotes.App.*;
 
 public class AppTest {
 
     @Test public void testNotEmptyRandomQuoteFromJSon() throws FileNotFoundException
     {
         String local_Backup = "src/main/resources/recentquotes.json";
-        Quotes[] quotes = readQuotes(local_Backup);
+        Quotes[] quotes = readLocalQuotes(local_Backup);
         randomQuoteFromJSon(quotes);
         assertNotEquals("Should Contain a Quote", "", randomQuoteFromJSon(quotes));
     }
 
-    @Test public void testNotEmptyRandomQuoteFromStarryQuotes() throws FileNotFoundException
-    {
-        String local_Backup = "src/main/resources/recentquotes.json";
-        Quotes[] quotes = readQuotes(local_Backup);
-        randomQuoteFromJSon(quotes);
-        assertNotEquals("Should Contain a Quote", "", randomQuoteFromJSon(quotes));
+    @Test public void testNotEmptyRandomQuoteFromStarryQuotes() throws FileNotFoundException, MalformedURLException {
+        String apiEndPoint = "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote";
+        String backup_Local = "src/main/resources/recentquotes.json";
+        assertNotEquals("Should Contain a Quote", "", goGetItOnline(apiEndPoint, backup_Local));
     }
 
 }
