@@ -26,8 +26,8 @@ public class App
         return reader;
     }
 
-    public static String goGetItOnline(String urlString, String backup_Local) throws FileNotFoundException, MalformedURLException {
-        URL url = new URL(urlString);
+    public static String goGetItOnline(String apiEndPoint, String backup_Local) throws FileNotFoundException, MalformedURLException {
+        URL url = new URL(apiEndPoint);
         try
         {
             BufferedReader buf_Reader = dialUP(url);
