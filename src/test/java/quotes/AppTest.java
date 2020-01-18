@@ -15,14 +15,13 @@ public class AppTest {
     {
         String local_Backup = "src/main/resources/recentquotes.json";
         Quotes[] quotes = readLocalQuotes(local_Backup);
-        randomQuoteFromJSon(quotes);
         assertNotEquals("Should Contain a Quote", "", randomQuoteFromJSon(quotes));
     }
 
-    @Test public void testNotEmptyRandomQuoteFromStarryQuotes() throws FileNotFoundException, MalformedURLException {
+    @Test public void testNoAPICallErrorRandomQuoteFromStarryQuotes() throws FileNotFoundException, MalformedURLException {
         String apiEndPoint = "http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote";
         String backup_Local = "src/main/resources/recentquotes.json";
-        assertNotEquals("Should Contain a Quote", "", goGetItOnline(apiEndPoint, backup_Local));
+        assertNotEquals("Should Contain a Quote", "API call error, reading from local backup file", goGetItOnline(apiEndPoint, backup_Local));
     }
 
 }

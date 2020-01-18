@@ -49,7 +49,7 @@ public class App
             Quotes[] quotes = readLocalQuotes(backup_Local);
             System.out.println(randomQuoteFromJSon(quotes));
             // Return empty to fail test if no online connectivity
-            return "";
+            return "API call error, reading from local backup file";
         }
     }
 
